@@ -1,70 +1,15 @@
 <html>
 <head>
-    <title>Interactive visualization of developer‘s actions</title>
+    <title>Wiki persons</title>
 
     <!-- for mobile devices like android and iphone -->
     <meta content="True" name="HandheldFriendly"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta name="Author" content="Lukas Sekerak"/>
     <meta name="robots" content="noindex"/>
-
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
-    <link rel="stylesheet" type="text/css" href="libs/timeline-2.8.0/timeline.css"/>
-    <link rel="stylesheet" type="text/css" href="libs/qtip2/jquery.qtip.css"/>
-    <link rel="stylesheet" type="text/css" href="libs/datetimepicker/jquery.datetimepicker.css"/>
-    <link rel="stylesheet" type="text/css" href="libs/selectize.js/dist/css/selectize.default.css"/>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="libs/JS_Simple_Date_Format/JsSimpleDateFormat.js"></script>
-    <script type="text/javascript" src="libs/qtip2/jquery.qtip.js"></script>
-
-    <script type="text/javascript" src="libs/datetimepicker/jquery.datetimepicker.js"></script>
-    <script type="text/javascript" src="libs/selectize.js/dist/js/standalone/selectize.js"></script>
-
-    <script type="text/javascript" src="libs/timeline-2.8.0/timeline.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/Item.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/ItemRange.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/ItemFloatingRange.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/ItemDot.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/ItemCircle.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/ItemChart.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/ItemBox.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/ClusterGenerator.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/StepDate.js"></script>
-    <script type="text/javascript" src="libs/timeline-2.8.0/parts/StepDate.js"></script>
-
-    <script type="text/javascript" src="js/events.js"></script>
-    <script type="text/javascript" src="js/timeline.js"></script>
-    <script type="text/javascript" src="js/chartPanel.js"></script>
-    <script type="text/javascript" src="js/chunksLoader.js"></script>
-    <script type="text/javascript" src="js/globals.js"></script>
-
-    <script type="text/javascript">
-        var gGlobals = undefined;
-        google.load("visualization", "1", {packages: ["corechart", 'table']});
-        google.setOnLoadCallback(onLoad);
-    </script>
 </head>
 
-<body onresize="onReSize();">
-<div id="toolbar">
-    Start time: <input type="text" id="startDate" value=""/>
-    End time: <input type="text" id="endDate" value=""/>
-    <input type="button" id="setRange" value="Set" onclick="onSetTime();"/>
-    <input type="button" id="setCurrentTime" value="Current time" onclick="onSetCurrentTime();"/>
-    <input type="text" id="select-links" class="demo-default" value="Developer A"/>
-</div>
-
-<div id="mytimeline"></div>
-<div id="rightBar">
-    <div id="pieChart1"></div>
-    <div id="pieChart2"></div>
-    <div id="pieChart3"></div>
-</div>
-<div class="clear"></div>
-<div id="datatable"></div>
+<body>
 
 </body>
 </html>

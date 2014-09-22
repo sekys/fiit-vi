@@ -2,13 +2,13 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <servlet>
-        <servlet-name>Timeline servlet</servlet-name>
-        <servlet-class>sk.stuba.fiit.perconik.ivda.server.servlets.TimelineServlet</servlet-class>
+        <servlet-name>persons service</servlet-name>
+        <servlet-class>service.Servlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Timeline servlet</servlet-name>
-        <url-pattern>/datatable</url-pattern>
+        <servlet-name>persons service</servlet-name>
+        <url-pattern>/persons</url-pattern>
     </servlet-mapping>
 
     <context-param>
@@ -61,7 +61,4 @@
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
 
-    <listener>
-        <listener-class>sk.stuba.fiit.perconik.ivda.server.servlets.AppInitializer</listener-class>
-    </listener>
 </web-app>

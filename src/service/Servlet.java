@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
 /**
@@ -25,7 +24,6 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String nameA = req.getParameter("first");
         String nameB = req.getParameter("second");
-        resp.setContentType(MediaType.APPLICATION_JSON);
     }
 
 }
