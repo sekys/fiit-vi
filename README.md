@@ -1,4 +1,4 @@
 vi
 ==
 
-Projekt na vyhladavanie informacii
+Projekt pre premet Vyhladavanie informacii.
