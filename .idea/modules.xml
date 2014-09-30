@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/aplikacia.iml" filepath="$PROJECT_DIR$/aplikacia.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sk.stuba.fiit.perconik.ivda.iml" filepath="$PROJECT_DIR$/sk.stuba.fiit.perconik.ivda.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../sk.stuba.fiit.perconik.uaca.dto/sk.stuba.fiit.perconik.uaca.dto.iml" filepath="$PROJECT_DIR$/../sk.stuba.fiit.perconik.uaca.dto/sk.stuba.fiit.perconik.uaca.dto.iml" />
     </modules>
   </component>
 </project>
