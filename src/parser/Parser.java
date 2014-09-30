@@ -1,11 +1,13 @@
 package parser;
 
-import java.io.*;
+import util.GZIP;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by Seky on 30. 9. 2014.
@@ -28,36 +30,11 @@ public class Parser {
         m_births = new ArrayList<>(FLUSH_LIMIT);
     }
 
-    private BufferedWriter createWriter(String name) throws Exception {
-        GZIPOutputStream zip = new GZIPOutputStream(new FileOutputStream(new File(name)));
-        return new BufferedWriter(new OutputStreamWriter(zip, "UTF-8"));
-    }
-
-    private BufferedReader openInputStream() throws Exception {
-        FileInputStream fis = new FileInputStream("D:/dump.gz");
-        GZIPInputStream gzis = new GZIPInputStream(fis);
-        InputStreamReader reader = new InputStreamReader(gzis);
-        return new BufferedReader(reader);
-    }
-
-    /*
-                // Parse to files
-            Pattern pattern = Pattern.compile("^(?:<([^>]+)>\\s*){2}<?([^>]+)>?$");
-            Matcher matcher = pattern.matcher(line);
-            if (matcher.matches()) {
-                line = matcher.group(1);
-                line = matcher.group(2);
-                line = matcher.group(3);
-            } else{
-                // error handling code
-            }
-
-     */
     public void parse() throws Exception {
-        BufferedWriter writerForDeaths = createWriter("deaths.gz");
-        BufferedWriter writerForObjects = createWriter("objects.gz");
-        BufferedWriter writerForBirths = createWriter("births.gz");
-        BufferedReader in = openInputStream();
+        BufferedWriter writerForDeaths = GZIP.write("deaths.gz");
+        BufferedWriter writerForObjects = GZIP.write("objects.gz");
+        BufferedWriter writerForBirths = GZIP.write("births.gz");
+        BufferedReader in = GZIP.read("D:/dump.gz");
 
         String line;
         int processed = 0;
@@ -87,7 +64,7 @@ public class Parser {
 
             // Show status
             if (processed % 1000000 == 0) {
-                percent = (double) 100 * ( ((double)processed) / TOTAL_LINES);
+                percent = (double) 100 * (((double) processed) / TOTAL_LINES);
                 System.out.println(Double.toString(percent));
             }
         }
