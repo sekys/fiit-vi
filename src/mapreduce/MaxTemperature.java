@@ -1,8 +1,9 @@
-package parser;
+package mapreduce;
 
 /**
  * Created by Seky on 28. 9. 2014.
  */
+
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -20,7 +21,7 @@ public class MaxTemperature {
 
         Job job = new Job();
         job.setJarByClass(MaxTemperature.class);
-        job.setJobName("Max temperature");
+        job.setJobName("Parse persons");
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
