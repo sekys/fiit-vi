@@ -10,12 +10,14 @@ Pre parsovanie freebase dumpu, vo formate RDF boli otestovane tieto techniky.
 3. Tretia technika spocivala vo vyuziti "zgrepu", ktory ma podobnu funkcionalitu ako grep s tym,
 ze parsuje povodny zazipovany subor. Na tomto subore boli spustene 4 prikazy naraz:
 
+```Shell
 
-zgrep '\s<http://rdf\.freebase\.com/ns/type\.object\.name' dump.gz | gzip > names.gz <br />
-zgrep '\s<http://rdf\.freebase\.com/ns/people\.person\.date_of_birth' dump.gz | gzip > births.gz  <br />
-zgrep '\s<http://rdf\.freebase\.com/ns/people\.deceased_person\.date_of_death' dump.gz | gzip > deceased_persons.gz  <br />
-zgrep '\s<http://rdf\.freebase.com/ns/type\.object\.type>\s<http://rdf\.freebase.com/ns/people\.person>' people.gz | gzip > people2.gz <br />
+zgrep '\s<http://rdf\.freebase\.com/ns/type\.object\.name' dump.gz | gzip > names.gz
+zgrep '\s<http://rdf\.freebase\.com/ns/people\.person\.date_of_birth' dump.gz | gzip > births.gz
+zgrep '\s<http://rdf\.freebase\.com/ns/people\.deceased_person\.date_of_death' dump.gz | gzip > deceased_persons.gz
+zgrep '\s<http://rdf\.freebase.com/ns/type\.object\.type>\s<http://rdf\.freebase.com/ns/people\.person>' people.gz | gzip > people2.gz
 
+```
 
 Parsovanie s dekompresiou trvalo 1hod. Pricom riadky boli rozdelene do suborov a boli rovno zakompresovane.
 

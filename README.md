@@ -1,7 +1,7 @@
 Projekt pre premet Vyhladavanie informacii.
 ==
 
-# Zadanie
+# Zadanie 
 Freebase, Sparsovanie entít Person, vytvorenie jednoduchej služby 'mohli sa stretnúť?', ktorá po zadaní dvoch mien určí, či sa mohli dané osoby stretnúť (prekryv času ich života). Ako Hadoop/Pig.
 
 # Ciele
@@ -10,9 +10,15 @@ Freebase, Sparsovanie entít Person, vytvorenie jednoduchej služby 'mohli sa st
 - nainstalovat Hadoop, pripravit prototyp jednoduchej MapReduce ulohy 
 - vytvorit REST sluzbu na vyhladavanie
 
-# Cvicenie 1.
+# Tyzden 1.
 - Rezervacia temy
 - Dekompozicia cielov a analyza udajov
+- vytvorena REST sluzba
 
-# Cvicenie 2.
+# Tyzden 2.
+- vytvoreny map reduce prototyp
+- stiahnuty freebase dump
+- oparsovane vlastnosti pre entitu person
+- nainstalovany hadoop
+
 
