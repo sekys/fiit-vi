@@ -4,11 +4,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.joda.time.DateTime;
 
 import javax.annotation.Nullable;
+import java.io.Serializable;
 
 /**
  * Created by Seky on 30. 9. 2014.
  */
-public class Person {
+public class Person implements Serializable, Comparable<Person> {
     private String id;
     private String name;
     private
@@ -18,12 +19,12 @@ public class Person {
     @Nullable
     DateTime death;
 
-    public String getId() {
-        return id;
+    public Person(String id) {
+        this.id = id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -72,5 +73,10 @@ public class Person {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return id.compareTo(o.getId());
     }
 }
