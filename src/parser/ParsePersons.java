@@ -8,6 +8,7 @@ import util.SortedArrayList;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +17,7 @@ import java.util.regex.Pattern;
  * Created by Seky on 30. 9. 2014.
  */
 public class ParsePersons {
-    private static final Pattern RDF_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s<([^>]+)>\\s.*$");
+    private static final Pattern RDF_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s<([^>]+)>.*");
     private static final Pattern RDF_DATE_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"..<([^>]+)>\\s.*$");
     private static final Pattern RDF_NAME_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"@([^\\s]+).*$");
     private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/m.";
@@ -25,13 +26,18 @@ public class ParsePersons {
     private final SortedArrayList<Person> people;
     private final DateFormats dates;
 
-    public ParsePersons() {
-        people = new SortedArrayList<Person>(5000000, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                return ((Person) o1).getId().compareTo((String) o2);
+    public static class PersonFinderComparator implements Comparator {
+        @Override
+        public int compare(Object o1, Object o2) {
+            if (o2 instanceof Person) {
+                return ((Person) o1).compareTo((Person) o2);
             }
-        });
+            return ((Person) o1).getId().compareTo((String) o2); // toto sa pouzije pri indexOf
+        }
+    }
+
+    public ParsePersons() {
+        people = new SortedArrayList<Person>(5000000, new PersonFinderComparator());
         dates = new DateFormats();
     }
 
@@ -121,8 +127,6 @@ public class ParsePersons {
                 Person e = find(id);
                 if (e != null) {
                     e.setName(name);
-                } else {
-                    LOGGER.warn("Uzivatel nenajdeny:" + id);
                 }
             }
         };
@@ -138,7 +142,7 @@ public class ParsePersons {
 
     private void serializePersons() throws Exception {
         LOGGER.info("Starting serialize outcomePersons.");
-        SerializationUtils.serialize(people, new FileOutputStream("data/outcomePersons"));
+        SerializationUtils.serialize((ArrayList<Person>) people, new FileOutputStream("data/outcomePersons"));
     }
 
     protected String parseID(String subject) {

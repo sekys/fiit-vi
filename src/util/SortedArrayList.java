@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class SortedArrayList<E> extends ArrayList<E> implements Serializable {
     private static final long serialVersionUID = -4672036942962369067L;
-    protected final Comparator comparator;
+    protected final transient Comparator comparator;
 
     @SuppressWarnings("rawtypes")
     public class DefaultComparator implements Comparator {
@@ -60,7 +60,7 @@ public class SortedArrayList<E> extends ArrayList<E> implements Serializable {
             stredny = (lavy + pravy) >> 1;
             compare = comparator.compare(get(stredny), elemHash);
             if (compare == 0) return stredny;
-            if (compare == -1) pravy = stredny - 1;
+            if (compare > 0) pravy = stredny - 1;
             else lavy = stredny + 1;
         }
         return -(lavy + 1);
@@ -122,7 +122,7 @@ public class SortedArrayList<E> extends ArrayList<E> implements Serializable {
             super.add(o);
             return true;
         }
-        if (comparator.compare(o, get(velkost - 1)) >= 0) {
+        if (comparator.compare(get(velkost - 1), o) <= 0) {
             super.add(o);
             return true;
         }
