@@ -24,5 +24,6 @@ public class Persons2Lucene {
 
     public void parse() throws Exception {
         people = (ArrayList<Person>) SerializationUtils.deserialize(new BufferedInputStream(new FileInputStream("data/outcomePersons")));
+
     }
 }

@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="aplikacia:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/aplikacia_jar</output-path>
+    <root id="archive" name="aplikacia.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="aplikacia" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-annotations:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-auth:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-client:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-common:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-core:1.2.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-hdfs:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-app:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-common:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-core:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-jobclient:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-shuffle:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-api:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-client:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-common:2.5.1" />
+      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-server-common:2.5.1" />
+    </root>
+  </artifact>
+</component>
