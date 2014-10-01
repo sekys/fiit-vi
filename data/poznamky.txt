@@ -1,0 +1,20 @@
+Job job = new Job(conf, "Cluster Classification Driver running over input: " + input);
+job.setJarByClass(ClusterClassificationDriver.class);
+
+job.setInputFormatClass(SequenceFileInputFormat.class);
+job.setOutputFormatClass(SequenceFileOutputFormat.class);
+
+job.setMapperClass(ClusterClassificationMapper.class);
+job.setNumReduceTasks(0);
+
+job.setOutputKeyClass(IntWritable.class);
+job.setOutputValueClass(WeightedPropertyVectorWritable.class);
+
+ GitHub - idea, postup, jedna strana, postup, literatura
+ doraz na technologie: github, javadoc, unit testy, komenty na premenne, hadoop
+
+Sparsovanie entít Person, vytvorenie jednoduchej služby 'mohli sa stretnúť?',
+ktorá po zadaní dvoch mien určí, či sa mohli dané osoby stretnúť (prekryv času ich života)
+
+
+
