@@ -16,7 +16,7 @@ public class GZIP {
     public static BufferedReader read(String name) throws Exception {
         FileInputStream fis = new FileInputStream(name);
         GZIPInputStream gzis = new GZIPInputStream(fis);
-        InputStreamReader reader = new InputStreamReader(gzis);
+        InputStreamReader reader = new InputStreamReader(gzis, "UTF-8");
         return new BufferedReader(reader);
     }
 }

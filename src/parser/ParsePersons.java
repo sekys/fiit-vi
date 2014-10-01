@@ -3,12 +3,13 @@ package parser;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import util.Configuration;
 import util.GZIP;
-import util.SortedArrayList;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +24,7 @@ public class ParsePersons {
     private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/m.";
     private static final Logger LOGGER = Logger.getLogger(ParsePersons.class.getName());
 
-    private final SortedArrayList<Person> people;
+    private final ArrayList<Person> people;
     private final DateFormats dates;
 
     public static class PersonFinderComparator implements Comparator {
@@ -37,11 +38,12 @@ public class ParsePersons {
     }
 
     public ParsePersons() {
-        people = new SortedArrayList<Person>(5000000, new PersonFinderComparator());
+        people = new ArrayList<Person>(5000000);
         dates = new DateFormats();
     }
 
     public static void main(String[] args) throws Exception {
+        Configuration.getInstance();
         ParsePersons p = new ParsePersons();
         p.parseFiles();
     }
@@ -75,8 +77,8 @@ public class ParsePersons {
     }
 
     private Person find(String id) {
-        int index = people.indexOf(id);
-        if (index == -1) {
+        int index = Collections.binarySearch(people, new Person(id));
+        if (index < 0) {
             return null;
         }
         return people.get(index);
@@ -134,15 +136,13 @@ public class ParsePersons {
 
     private void parseFiles() throws Exception {
         parseFile("data/people.gz", RDF_PATTER, parsePersonID());
+        LOGGER.info("Sorting");
+        Collections.sort(people);
         parseFile("data/births.gz", RDF_DATE_PATTER, parseBirths());
         parseFile("data/deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
         parseFile("data/names.gz", RDF_NAME_PATTER, parseNames());
-        serializePersons();
-    }
-
-    private void serializePersons() throws Exception {
         LOGGER.info("Starting serialize outcomePersons.");
-        SerializationUtils.serialize((ArrayList<Person>) people, new FileOutputStream("data/outcomePersons"));
+        SerializationUtils.serialize(people, new FileOutputStream("data/outcomePersons"));
     }
 
     protected String parseID(String subject) {
