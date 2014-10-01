@@ -14,7 +14,7 @@ ze parsuje povodny zazipovany subor. Na tomto subore boli spustene 3 prikazy nar
 zgrep '\s<http://rdf\.freebase\.com/ns/type\.object\.name' dump.gz | gzip > names.gz <br />
 zgrep '\s<http://rdf\.freebase\.com/ns/people\.person\.date_of_birth' dump.gz | gzip > births.gz  <br />
 zgrep '\s<http://rdf\.freebase\.com/ns/people\.deceased_person\.date_of_death' dump.gz | gzip > deceased_persons.gz  <br />
-
+zgrep '\s<http://rdf\.freebase\.com/ns/people\.person>' dump.gz | gzip > people.gz <br />
 
 
 Parsovanie s dekompresiou trvalo 1hod. Pricom riadky boli rozdelene do suborov a boli rovno zakompresovane.

@@ -14,7 +14,6 @@ import java.util.List;
 public class DateFormats {
     private final List<DateTimeFormatter> formats;
 
-
     public DateFormats() {
         formats = new ArrayList<>(10);
         add("YYYY-MM-dd");

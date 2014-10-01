@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Seky on 30. 9. 2014.
  */
-public class Parser {
+public class ParseDump2Parts {
     private final static Pattern REGEX_DEAD_PEOPLE = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/people\\.deceased_person>.*");
     private final static Pattern REGEX_OBJECTS = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/type\\.object\\.name>.*");
     private final static Pattern REGEX_DATE_OF_BIRTH = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/people\\.person\\.date_of_birth>.*");
@@ -24,10 +24,15 @@ public class Parser {
     private List<String> m_objects;
     private List<String> m_births;
 
-    public Parser() {
+    public ParseDump2Parts() {
         m_deads = new ArrayList<>(FLUSH_LIMIT);
         m_objects = new ArrayList<>(FLUSH_LIMIT);
         m_births = new ArrayList<>(FLUSH_LIMIT);
+    }
+
+    public static void main(String[] args) throws Exception {
+        ParseDump2Parts p = new ParseDump2Parts();
+        p.parse();
     }
 
     public void parse() throws Exception {
@@ -88,10 +93,5 @@ public class Parser {
         }
         System.out.println("flushing");
         writer.flush();
-    }
-
-    public static void main(String[] args) throws Exception {
-        Parser p = new Parser();
-        p.parse();
     }
 }

@@ -14,66 +14,114 @@ import java.util.regex.Pattern;
  * Created by Seky on 30. 9. 2014.
  */
 public class ParsePersons {
+    private static final Pattern RDF_DATE_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"..<([^>]+)>\\s.*$");
+    private static final Pattern RDF_NAME_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"@([^\\s]+).*$");
+    private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/m.";
     private static final Logger LOGGER = Logger.getLogger(ParsePersons.class.getName());
-    private static final Pattern RDF_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"..<([^>]+)>\\s.*$");
+
 
     private final Map<String, Person> people;
-    private final DateFormats dates = new DateFormats();
+    private final DateFormats dates;
 
     public ParsePersons() {
         people = new HashMap<>(1000000);
+        dates = new DateFormats();
     }
 
     public static void main(String[] args) throws Exception {
         ParsePersons p = new ParsePersons();
-        p.parseBirth();
+        p.parseFiles();
     }
 
-    public void parseBirth() throws Exception {
-        BufferedReader in = GZIP.read("data/deceased_persons.gz");
-        //BufferedReader in = GZIP.read("data/zbirths.gz");
-
+    private void parseFile(String file, Pattern pattern, IParsing parsing) throws Exception {
+        BufferedReader in = GZIP.read(file);
         String line;
         while ((line = in.readLine()) != null) {
             try {
-                parseLine(line);
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.matches()) {
+                    parsing.parseRdf(matcher);
+                } else {
+                    throw new IllegalArgumentException("Line is bad formatted.");
+                }
             } catch (Exception e) {
-                LOGGER.warn("ignoring " + line);
+                LOGGER.warn(file + " ignoring " + line);
             }
         }
     }
 
-    protected void parseLine(String line) throws Exception {
-        // Parse line
-        Matcher matcher = RDF_PATTER.matcher(line);
-        if (matcher.matches()) {
-            parseRdf(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
-        } else {
-            throw new Exception("Line is bad formatted.");
-        }
+    private IParsing parseBirths() {
+        return new IParsing() {
+            @Override
+            public void parseRdf(Matcher m) {
+                String id = parseID(m.group(1));
+                DateTime date = dates.format(m.group(3));
+
+                Person e = people.get(id);
+                if (e == null) {
+                    e = new Person();
+                    e.setBirth(date);
+                    people.put(id, e);
+                } else {
+                    LOGGER.error("uzivatel je tu 2x");
+                }
+            }
+        };
     }
 
-    private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/";
+    private IParsing parseDeaths() {
+        return new IParsing() {
+            @Override
+            public void parseRdf(Matcher m) {
+                String id = parseID(m.group(1));
+                DateTime date = dates.format(m.group(3));
 
-    protected String parseID(String subject) throws Exception {
+                Person e = people.get(id);
+                if (e != null) {
+                    e.setDeath(date);
+                } else {
+                    LOGGER.warn("Uzivatel nenajdeny: " + id);
+                }
+            }
+        };
+    }
+
+    private IParsing parseNames() {
+        return new IParsing() {
+            @Override
+            public void parseRdf(Matcher m) {
+                String id = parseID(m.group(1));
+                if (id == null) {
+                    return;
+                }
+                String name = m.group(3);
+                String language = m.group(4);
+
+                Person e = people.get(id);
+                if (e != null) {
+                    e.setName(name);
+                } else {
+                    LOGGER.warn("Uzivatel nenajdeny: " + id);
+                }
+            }
+        };
+    }
+
+    private void parseFiles() throws Exception {
+        parseFile("data/zbirths.gz", RDF_DATE_PATTER, parseBirths());
+        parseFile("data/deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
+        parseFile("data/name.gz", RDF_NAME_PATTER, parseNames());
+    }
+
+    protected String parseID(String subject) {
         // like http://rdf.freebase.com/ns/m.0100kt2c
         if (!subject.startsWith(SUBJECT_ID_PREFIX)) {
-            throw new Exception("prefix nesedi");
+            return null; // prefix nesedi
         }
         return subject.substring(SUBJECT_ID_PREFIX.length(), subject.length());
     }
 
-    protected void parseRdf(String subject, String predicate, String value, String object) throws Exception {
-        String id = parseID(subject);
-        DateTime date = dates.format(value);
-
-        Person e = people.get(id);
-        if (e == null) {
-            e = new Person();
-            e.setBirth(date);
-            people.put(id, e);
-        } else {
-            LOGGER.error("uzivatel je tu 2x");
-        }
+    private interface IParsing {
+        void parseRdf(Matcher m);
     }
 }

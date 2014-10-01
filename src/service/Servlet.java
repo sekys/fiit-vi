@@ -19,7 +19,6 @@ public class Servlet extends HttpServlet {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String nameA = req.getParameter("first");
