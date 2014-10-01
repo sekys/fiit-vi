@@ -8,13 +8,13 @@ Pre parsovanie freebase dumpu, vo formate RDF boli otestovane tieto techniky.
 2. Druha technika spocivala v pouziti Java programu, kde sa vyuzili regularne vyrazy. Program je v triede Parser.java. Program parsoval povodny GZ subor za pomoci GZIPInputStream a riadky boli parsovane do 3 roznych suborov, podla typu. Parsovanie a dekompresia trvala 3hod.
 
 3. Tretia technika spocivala vo vyuziti "zgrepu", ktory ma podobnu funkcionalitu ako grep s tym,
-ze parsuje povodny zazipovany subor. Na tomto subore boli spustene 3 prikazy naraz:
+ze parsuje povodny zazipovany subor. Na tomto subore boli spustene 4 prikazy naraz:
 
 
 zgrep '\s<http://rdf\.freebase\.com/ns/type\.object\.name' dump.gz | gzip > names.gz <br />
 zgrep '\s<http://rdf\.freebase\.com/ns/people\.person\.date_of_birth' dump.gz | gzip > births.gz  <br />
 zgrep '\s<http://rdf\.freebase\.com/ns/people\.deceased_person\.date_of_death' dump.gz | gzip > deceased_persons.gz  <br />
-zgrep '\s<http://rdf\.freebase\.com/ns/people\.person>' dump.gz | gzip > people.gz <br />
+zgrep '\s<http://rdf\.freebase.com/ns/type\.object\.type>\s<http://rdf\.freebase.com/ns/people\.person>' people.gz | gzip > people2.gz <br />
 
 
 Parsovanie s dekompresiou trvalo 1hod. Pricom riadky boli rozdelene do suborov a boli rovno zakompresovane.
