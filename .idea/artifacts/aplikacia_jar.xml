@@ -8,19 +8,12 @@
       <element id="module-output" name="aplikacia" />
       <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-annotations:2.5.1" />
       <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-auth:2.5.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-client:2.5.1" />
       <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-common:2.5.1" />
       <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-core:1.2.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-hdfs:2.5.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-app:2.5.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-common:2.5.1" />
       <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-core:2.5.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-jobclient:2.5.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-shuffle:2.5.1" />
       <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-api:2.5.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-client:2.5.1" />
       <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-common:2.5.1" />
-      <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-yarn-server-common:2.5.1" />
+      <element id="library" level="project" name="Maven: joda-time:joda-time:2.4" />
     </root>
   </artifact>
 </component>
