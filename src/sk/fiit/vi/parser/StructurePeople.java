@@ -1,13 +1,12 @@
 package sk.fiit.vi.parser;
 
-import org.apache.commons.lang.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import sk.fiit.vi.util.Configuration;
 import sk.fiit.vi.util.GZIP;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +22,7 @@ public class StructurePeople {
     private static final Pattern RDF_NAME_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"@([^\\s]+).*$");
     private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/m.";
     private static final Logger LOGGER = Logger.getLogger(StructurePeople.class.getName());
+    public static final File DATA_DIR = new File("data/");
 
     private final ArrayList<Person> people;
     private final DateFormats dates;
@@ -48,7 +48,8 @@ public class StructurePeople {
         p.parseFiles();
     }
 
-    private void parseFile(String file, Pattern pattern, IParsing parsing) throws Exception {
+    private void parseFile(String name, Pattern pattern, IParsing parsing) throws Exception {
+        File file = new File(DATA_DIR, name);
         LOGGER.info("Starting parse: " + file);
         BufferedReader in = GZIP.read(file);
         String line;
@@ -135,14 +136,14 @@ public class StructurePeople {
     }
 
     private void parseFiles() throws Exception {
-        parseFile("data/people.gz", RDF_PATTER, parsePersonID());
+        parseFile("people.gz", RDF_PATTER, parsePersonID());
         LOGGER.info("Sorting");
         Collections.sort(people);
-        //parseFile("data/births.gz", RDF_DATE_PATTER, parseBirths());
-        // parseFile("data/deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
-        parseFile("data/names.gz", RDF_NAME_PATTER, parseNames());
+        parseFile("births.gz", RDF_DATE_PATTER, parseBirths());
+        parseFile("deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
+        parseFile("names.gz", RDF_NAME_PATTER, parseNames());
         LOGGER.info("Starting serialize outcomePersons.");
-        SerializationUtils.serialize(people, new FileOutputStream("data/outcomePersons"));
+        GZIP.serialize(people, new File(DATA_DIR, "outcomePersons.gz"));
     }
 
     protected String parseID(String subject) {

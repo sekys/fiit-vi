@@ -1,5 +1,7 @@
 package sk.fiit.vi.util;
 
+import org.apache.commons.lang.SerializationUtils;
+
 import java.io.*;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -8,15 +10,28 @@ import java.util.zip.GZIPOutputStream;
  * Created by Seky on 30. 9. 2014.
  */
 public class GZIP {
-    public static BufferedWriter write(String name) throws Exception {
-        GZIPOutputStream zip = new GZIPOutputStream(new FileOutputStream(new File(name)));
-        return new BufferedWriter(new OutputStreamWriter(zip, "UTF-8"));
+
+    private static GZIPOutputStream outputStream(File file) throws Exception {
+        return new GZIPOutputStream(new FileOutputStream(file));
     }
 
-    public static BufferedReader read(String name) throws Exception {
-        FileInputStream fis = new FileInputStream(name);
-        GZIPInputStream gzis = new GZIPInputStream(fis);
-        InputStreamReader reader = new InputStreamReader(gzis, "UTF-8");
-        return new BufferedReader(reader);
+    private static GZIPInputStream inputStream(File file) throws Exception {
+        return new GZIPInputStream(new FileInputStream(file));
+    }
+
+    public static BufferedWriter write(File name) throws Exception {
+        return new BufferedWriter(new OutputStreamWriter(outputStream(name), "UTF-8"));
+    }
+
+    public static BufferedReader read(File name) throws Exception {
+        return new BufferedReader(new InputStreamReader(inputStream(name), "UTF-8"));
+    }
+
+    public static void serialize(Serializable object, File file) throws Exception {
+        SerializationUtils.serialize(object, outputStream(file));
+    }
+
+    public static Object deserialize(File file) throws Exception {
+        return SerializationUtils.deserialize(new FileInputStream(file));
     }
 }

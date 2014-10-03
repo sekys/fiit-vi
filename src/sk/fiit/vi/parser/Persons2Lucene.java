@@ -1,11 +1,10 @@
 package sk.fiit.vi.parser;
 
-import org.apache.commons.lang.SerializationUtils;
 import org.apache.log4j.Logger;
 import sk.fiit.vi.util.Configuration;
+import sk.fiit.vi.util.GZIP;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +22,7 @@ public class Persons2Lucene {
     }
 
     public void parse() throws Exception {
-        people = (ArrayList<Person>) SerializationUtils.deserialize(new BufferedInputStream(new FileInputStream("data/outcomePersons")));
+        people = (ArrayList<Person>) GZIP.deserialize(new File(StructurePeople.DATA_DIR, "outcomePersons.gz"));
 
     }
 }
