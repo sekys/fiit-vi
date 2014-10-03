@@ -1,4 +1,4 @@
-package util;
+package sk.fiit.vi.util;
 
 import junit.framework.TestCase;
 import org.junit.Assert;

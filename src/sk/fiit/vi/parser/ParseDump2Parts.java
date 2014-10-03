@@ -1,6 +1,6 @@
-package parser;
+package sk.fiit.vi.parser;
 
-import util.GZIP;
+import sk.fiit.vi.util.GZIP;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

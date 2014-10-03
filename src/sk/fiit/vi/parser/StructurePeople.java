@@ -1,10 +1,10 @@
-package parser;
+package sk.fiit.vi.parser;
 
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import util.Configuration;
-import util.GZIP;
+import sk.fiit.vi.util.Configuration;
+import sk.fiit.vi.util.GZIP;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -17,12 +17,12 @@ import java.util.regex.Pattern;
 /**
  * Created by Seky on 30. 9. 2014.
  */
-public class ParsePersons {
+public class StructurePeople {
     private static final Pattern RDF_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s<([^>]+)>.*");
     private static final Pattern RDF_DATE_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"..<([^>]+)>\\s.*$");
     private static final Pattern RDF_NAME_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"@([^\\s]+).*$");
     private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/m.";
-    private static final Logger LOGGER = Logger.getLogger(ParsePersons.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(StructurePeople.class.getName());
 
     private final ArrayList<Person> people;
     private final DateFormats dates;
@@ -37,14 +37,14 @@ public class ParsePersons {
         }
     }
 
-    public ParsePersons() {
+    public StructurePeople() {
         people = new ArrayList<Person>(5000000);
         dates = new DateFormats();
     }
 
     public static void main(String[] args) throws Exception {
         Configuration.getInstance();
-        ParsePersons p = new ParsePersons();
+        StructurePeople p = new StructurePeople();
         p.parseFiles();
     }
 

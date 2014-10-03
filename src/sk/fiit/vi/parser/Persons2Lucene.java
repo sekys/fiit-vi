@@ -1,8 +1,8 @@
-package parser;
+package sk.fiit.vi.parser;
 
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.log4j.Logger;
-import util.Configuration;
+import sk.fiit.vi.util.Configuration;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

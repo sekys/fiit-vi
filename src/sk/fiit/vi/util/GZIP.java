@@ -1,4 +1,4 @@
-package util;
+package sk.fiit.vi.util;
 
 import java.io.*;
 import java.util.zip.GZIPInputStream;

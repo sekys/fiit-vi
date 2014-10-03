@@ -1,4 +1,4 @@
-package util;
+package sk.fiit.vi.util;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Level;

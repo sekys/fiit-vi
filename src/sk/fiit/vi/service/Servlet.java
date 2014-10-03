@@ -1,4 +1,4 @@
-package service;
+package sk.fiit.vi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;

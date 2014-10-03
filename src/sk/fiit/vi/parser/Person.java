@@ -1,9 +1,8 @@
-package parser;
+package sk.fiit.vi.parser;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.joda.time.DateTime;
 
-import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
@@ -13,10 +12,8 @@ public class Person implements Serializable, Comparable<Person> {
     private String id;
     private String name;
     private
-    @Nullable
     DateTime birth;
     private
-    @Nullable
     DateTime death;
 
     public Person(String id) {
@@ -35,21 +32,19 @@ public class Person implements Serializable, Comparable<Person> {
         this.name = name;
     }
 
-    @Nullable
     public DateTime getBirth() {
         return birth;
     }
 
-    public void setBirth(@Nullable DateTime birth) {
+    public void setBirth(DateTime birth) {
         this.birth = birth;
     }
 
-    @Nullable
     public DateTime getDeath() {
         return death;
     }
 
-    public void setDeath(@Nullable DateTime death) {
+    public void setDeath(DateTime death) {
         this.death = death;
     }
 

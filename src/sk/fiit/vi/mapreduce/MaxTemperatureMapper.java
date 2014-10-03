@@ -1,4 +1,4 @@
-package mapreduce;
+package sk.fiit.vi.mapreduce;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;

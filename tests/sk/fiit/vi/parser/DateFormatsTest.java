@@ -1,4 +1,4 @@
-package parser;
+package sk.fiit.vi.parser;
 
 
 import junit.framework.TestCase;
