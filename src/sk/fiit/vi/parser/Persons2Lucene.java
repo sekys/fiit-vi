@@ -16,5 +16,6 @@ public class Persons2Lucene {
         ArrayList<Person> people;
         people = (ArrayList<Person>) GZIP.deserialize(new File(Configuration.getInstance().getDataDir(), "outcomePersons.gz"));
         Lucene.getInstance().addPeople(people);
+        Lucene.getInstance().close();
     }
 }
