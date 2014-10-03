@@ -15,7 +15,7 @@
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
           <element id="library" level="project" name="Maven: commons-digester:commons-digester:1.8" />
-          <element id="library" level="project" name="Maven: oro:oro:2.0.8" />
+          <element id="library" level="application" name="hadoop" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="aplikacia/web/Web" />
