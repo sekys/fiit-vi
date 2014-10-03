@@ -23,6 +23,7 @@ public final class Configuration implements Serializable {
     private static final String FILENAME = "configuration.xml";
     private static final String LOGGING_PROPERTIES_FILE = "log4j.properties";
     private static JAXBContext context;
+    public File dataDir;
 
     static {
         // Load conf dir
@@ -81,4 +82,11 @@ public final class Configuration implements Serializable {
         private static final Configuration INSTANCE = read();
     }
 
+    public File getDataDir() {
+        return dataDir;
+    }
+
+    public void setDataDir(File dataDir) {
+        this.dataDir = dataDir;
+    }
 }

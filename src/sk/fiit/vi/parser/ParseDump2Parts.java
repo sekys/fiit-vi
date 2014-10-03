@@ -1,9 +1,11 @@
 package sk.fiit.vi.parser;
 
+import sk.fiit.vi.util.Configuration;
 import sk.fiit.vi.util.GZIP;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +38,10 @@ public class ParseDump2Parts {
     }
 
     public void parse() throws Exception {
-        BufferedWriter writerForDeaths = GZIP.write("deaths.gz");
-        BufferedWriter writerForObjects = GZIP.write("objects.gz");
-        BufferedWriter writerForBirths = GZIP.write("births.gz");
-        BufferedReader in = GZIP.read("D:/dump.gz");
+        BufferedWriter writerForDeaths = GZIP.write(new File(Configuration.getInstance().getDataDir(), "deaths.gz"));
+        BufferedWriter writerForObjects = GZIP.write(new File(Configuration.getInstance().getDataDir(), "objects.gz"));
+        BufferedWriter writerForBirths = GZIP.write(new File(Configuration.getInstance().getDataDir(), "births.gz"));
+        BufferedReader in = GZIP.read(new File(Configuration.getInstance().getDataDir(), "dump.gz"));
 
         String line;
         int processed = 0;

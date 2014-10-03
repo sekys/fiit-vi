@@ -22,7 +22,6 @@ public class StructurePeople {
     private static final Pattern RDF_NAME_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"@([^\\s]+).*$");
     private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/m.";
     private static final Logger LOGGER = Logger.getLogger(StructurePeople.class.getName());
-    public static final File DATA_DIR = new File("data/");
 
     private final ArrayList<Person> people;
     private final DateFormats dates;
@@ -49,7 +48,7 @@ public class StructurePeople {
     }
 
     private void parseFile(String name, Pattern pattern, IParsing parsing) throws Exception {
-        File file = new File(DATA_DIR, name);
+        File file = new File(Configuration.getInstance().getDataDir(), name);
         LOGGER.info("Starting parse: " + file);
         BufferedReader in = GZIP.read(file);
         String line;
@@ -143,7 +142,7 @@ public class StructurePeople {
         parseFile("deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
         parseFile("names.gz", RDF_NAME_PATTER, parseNames());
         LOGGER.info("Starting serialize outcomePersons.");
-        GZIP.serialize(people, new File(DATA_DIR, "outcomePersons.gz"));
+        GZIP.serialize(people, new File(Configuration.getInstance().getDataDir(), "outcomePersons.gz"));
     }
 
     protected String parseID(String subject) {
