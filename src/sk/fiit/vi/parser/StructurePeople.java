@@ -128,7 +128,7 @@ public class StructurePeople {
                 String language = m.group(4);
                 Person e = find(id);
                 if (e != null) {
-                    e.setName(name);
+                    e.addName(name);
                 }
             }
         };
@@ -138,8 +138,8 @@ public class StructurePeople {
         parseFile("data/people.gz", RDF_PATTER, parsePersonID());
         LOGGER.info("Sorting");
         Collections.sort(people);
-        parseFile("data/births.gz", RDF_DATE_PATTER, parseBirths());
-        parseFile("data/deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
+        //parseFile("data/births.gz", RDF_DATE_PATTER, parseBirths());
+        // parseFile("data/deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
         parseFile("data/names.gz", RDF_NAME_PATTER, parseNames());
         LOGGER.info("Starting serialize outcomePersons.");
         SerializationUtils.serialize(people, new FileOutputStream("data/outcomePersons"));
