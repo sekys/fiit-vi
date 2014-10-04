@@ -13,10 +13,8 @@ import java.util.List;
 public class Person implements Serializable, Comparable<Person> {
     private String id;
     private List<String> names;
-    private
-    DateTime birth;
-    private
-    DateTime death;
+    private DateTime birth;
+    private DateTime death;
 
     public Person(String id) {
         this.id = id;
@@ -76,5 +74,57 @@ public class Person implements Serializable, Comparable<Person> {
     @Override
     public int compareTo(Person o) {
         return id.compareTo(o.getId());
+    }
+
+
+    private Boolean pointIntersection(DateTime point, Person another) {
+        if (another.birth == null || another.death == null) {
+            return null;
+        }
+
+        return (another.birth.isBefore(point) && another.death.isAfter(point));
+    }
+
+    private boolean intervalIntersection(Person a, Person b) {
+        return pointIntersection(a.birth, b) == true || pointIntersection(a.death, b) == true;
+    }
+
+    public Boolean checkIntersection(Person another) {
+        if (equals(another)) {
+            return true;  // sam so sebou
+        }
+
+        if (birth == null && death == null) {
+            return null;   // nezistim odpoved
+        }
+
+        if (another.birth == null && another.death == null) {
+            return null;  // nezistim odpoved
+        }
+
+        if (birth != null && death != null) {  // interval intersection
+            if (another.birth != null && another.death != null) {
+                // interval s intervalom
+                return intervalIntersection(this, another);
+            }
+
+            if (another.death != null) {
+                return pointIntersection(another.death, this);
+            }
+
+            if (another.birth != null) {
+                return pointIntersection(another.birth, this);
+            }
+        }
+
+        if (death != null) {
+            return pointIntersection(death, another);
+        }
+
+        if (birth != null) {
+            return pointIntersection(birth, another);
+        }
+
+        return false;
     }
 }

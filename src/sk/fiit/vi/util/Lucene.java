@@ -66,7 +66,7 @@ public class Lucene {
         Document doc;
         for (Person p : people) {
             for (String name : p.getNames()) {
-                doc = createDoc(p.getId(), name, p.getBirth(), p.getDeath());
+                doc = serializePerson(p.getId(), name, p.getBirth(), p.getDeath());
                 writer.addDocument(doc);
             }
         }
@@ -74,7 +74,7 @@ public class Lucene {
         writer.close();
     }
 
-    private Document createDoc(String id, String name, DateTime birth, DateTime death) throws IOException {
+    private Document serializePerson(String id, String name, DateTime birth, DateTime death) throws IOException {
         Document doc = new Document();
         doc.add(new TextField("name", name, Field.Store.YES));
         if (birth != null) {
@@ -85,6 +85,20 @@ public class Lucene {
         }
         doc.add(new StringField("id", id, Field.Store.YES));
         return doc;
+    }
+
+    private Person deserializePerson(Document doc) {
+        Person p = new Person(doc.get("id"));
+        String birth = doc.get("birth");
+        if (birth != null) {
+            p.setBirth(fmt.parseDateTime(birth));
+        }
+        String death = doc.get("birth");
+        if (death != null) {
+            p.setDeath(fmt.parseDateTime(death));
+        }
+        p.addName(doc.get("name"));
+        return p;
     }
 
     public void close() {
@@ -100,7 +114,7 @@ public class Lucene {
         return textAnalyzer;
     }
 
-    public List<Document> find(String name) throws Exception {
+    public List<Person> find(String name) throws Exception {
         IndexReader reader = DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
 
@@ -109,10 +123,12 @@ public class Lucene {
         searcher.search(query, collector);
         ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
-        List<Document> outcome = new ArrayList();
+        List<Person> outcome = new ArrayList();
         for (ScoreDoc doc : hits) {
             int documentID = doc.doc;
-            outcome.add(searcher.doc(documentID));
+            Document d = searcher.doc(documentID);
+            Person p = deserializePerson(d);
+            outcome.add(p);
         }
         return Collections.unmodifiableList(outcome);
     }
