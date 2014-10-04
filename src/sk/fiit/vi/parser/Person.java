@@ -10,6 +10,8 @@ import java.util.List;
  * Created by Seky on 30. 9. 2014.
  */
 public class Person implements Serializable, Comparable<Person> {
+    private static final long serialVersionUID = 5548062182445352621L;
+
     private String id;
     private List<String> names;
     private DateTime birth;

@@ -90,9 +90,9 @@ public class StructurePeople {
             @Override
             public void parseRdf(Matcher m) {
                 String id = parseID(m.group(1));
-                DateTime date = dates.format(m.group(3));
                 Person e = find(id);
                 if (e != null) {
+                    DateTime date = dates.format(m.group(3));
                     e.setBirth(date);
                 } else {
                     LOGGER.warn("Uzivatel nenajdeny:" + id);
@@ -106,9 +106,9 @@ public class StructurePeople {
             @Override
             public void parseRdf(Matcher m) {
                 String id = parseID(m.group(1));
-                DateTime date = dates.format(m.group(3));
                 Person e = find(id);
                 if (e != null) {
+                    DateTime date = dates.format(m.group(3));
                     e.setDeath(date);
                 } else {
                     LOGGER.warn("Uzivatel nenajdeny:" + id);
@@ -142,7 +142,7 @@ public class StructurePeople {
         parseFile(ParseDump2Parts.FILE_BIRTHS, RDF_DATE_PATTER, parseBirths());
         parseFile(ParseDump2Parts.FILE_DEATH, RDF_DATE_PATTER, parseDeaths());
         parseFile(ParseDump2Parts.FILE_OBJECTS, RDF_NAME_PATTER, parseNames());
-        LOGGER.info("Starting serialize outcomePersons.");
+        LOGGER.info("Starting serialize: " + FILE_STRUCTURED_PEOPLE);
         GZIP.serialize(people, FILE_STRUCTURED_PEOPLE);
     }
 
