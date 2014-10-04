@@ -25,16 +25,17 @@ import sk.fiit.vi.parser.Person;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Seky on 2. 10. 2014.
  */
 public class Lucene {
     private static final Logger LOGGER = Logger.getLogger(Lucene.class.getName());
-    private static final File DATA_DIR = new File("data/lucene");
+    private static final File DATA_DIR = new File(Configuration.getInstance().getDataDir(), "lucene");
     private static final Version VERSION = Version.LUCENE_4_9;
     private static final int HITS = 5;
 
@@ -70,6 +71,7 @@ public class Lucene {
                 writer.addDocument(doc);
             }
         }
+        LOGGER.info("Commiting");
         writer.commit();
         writer.close();
     }
@@ -93,7 +95,7 @@ public class Lucene {
         if (birth != null) {
             p.setBirth(fmt.parseDateTime(birth));
         }
-        String death = doc.get("birth");
+        String death = doc.get("death");
         if (death != null) {
             p.setDeath(fmt.parseDateTime(death));
         }
@@ -114,7 +116,7 @@ public class Lucene {
         return textAnalyzer;
     }
 
-    public List<Person> find(String name) throws Exception {
+    public Set<Person> find(String name) throws Exception {
         IndexReader reader = DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
 
@@ -123,13 +125,13 @@ public class Lucene {
         searcher.search(query, collector);
         ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
-        List<Person> outcome = new ArrayList();
+        Set<Person> outcome = new HashSet<>();
         for (ScoreDoc doc : hits) {
             int documentID = doc.doc;
             Document d = searcher.doc(documentID);
             Person p = deserializePerson(d);
             outcome.add(p);
         }
-        return Collections.unmodifiableList(outcome);
+        return Collections.unmodifiableSet(outcome);
     }
 }

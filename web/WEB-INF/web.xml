@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <servlet>
-        <servlet-name>persons service</servlet-name>
-        <servlet-class>service.Servlet</servlet-class>
+        <servlet-name>people service</servlet-name>
+        <servlet-class>sk.fiit.vi.service.Servlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>persons service</servlet-name>
-        <url-pattern>/persons</url-pattern>
+        <servlet-name>people service</servlet-name>
+        <url-pattern>/people</url-pattern>
     </servlet-mapping>
 
     <listener>

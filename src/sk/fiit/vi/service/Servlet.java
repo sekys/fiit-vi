@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Seky on 17. 7. 2014.
@@ -21,7 +21,7 @@ public class Servlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(Servlet.class.getName());
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private void printPeople(PrintWriter writer, String title, List<Person> people) {
+    private void printPeople(PrintWriter writer, String title, Set<Person> people) {
         writer.println("</br>");
         writer.println(title + "</br>");
         for (Person p : people) {
@@ -31,16 +31,21 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String nameA = req.getParameter("first");
-        String nameB = req.getParameter("second");
+        String nameA = req.getParameter("nameA");
+        String nameB = req.getParameter("nameB");
+
+        if (nameA == null || nameB == null) {
+            resp.sendError(400, "Parameter nameA / nameB missing.");
+            return;
+        }
 
         resp.setHeader("Content-Type", "text/html");
         PrintWriter writer = resp.getWriter();
         writer.println("<html><body><pre>");
 
         try {
-            List<Person> peopleA = Lucene.getInstance().find(nameA);
-            List<Person> peopleB = Lucene.getInstance().find(nameB);
+            Set<Person> peopleA = Lucene.getInstance().find(nameA);
+            Set<Person> peopleB = Lucene.getInstance().find(nameB);
 
             printPeople(writer, "People A", peopleA);
             printPeople(writer, "People B", peopleB);

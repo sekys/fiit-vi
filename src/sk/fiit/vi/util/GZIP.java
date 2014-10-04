@@ -28,10 +28,10 @@ public class GZIP {
     }
 
     public static void serialize(Serializable object, File file) throws Exception {
-        SerializationUtils.serialize(object, outputStream(file));
+        SerializationUtils.serialize(object, new BufferedOutputStream(outputStream(file)));
     }
 
     public static Object deserialize(File file) throws Exception {
-        return SerializationUtils.deserialize(new FileInputStream(file));
+        return SerializationUtils.deserialize(new BufferedInputStream(inputStream(file)));
     }
 }
