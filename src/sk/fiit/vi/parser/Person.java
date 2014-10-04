@@ -1,6 +1,5 @@
 package sk.fiit.vi.parser;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
@@ -50,11 +49,6 @@ public class Person implements Serializable, Comparable<Person> {
     }
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("birth", birth).append("death", death).append("id", id).toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -77,7 +71,7 @@ public class Person implements Serializable, Comparable<Person> {
     }
 
 
-    private Boolean pointIntersection(DateTime point, Person another) {
+    private static Boolean pointIntersection(DateTime point, Person another) {
         if (another.birth == null || another.death == null) {
             return null;
         }
@@ -85,7 +79,7 @@ public class Person implements Serializable, Comparable<Person> {
         return (another.birth.isBefore(point) && another.death.isAfter(point));
     }
 
-    private boolean intervalIntersection(Person a, Person b) {
+    private static boolean intervalIntersection(Person a, Person b) {
         return pointIntersection(a.birth, b) == true || pointIntersection(a.death, b) == true;
     }
 
@@ -126,5 +120,16 @@ public class Person implements Serializable, Comparable<Person> {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Person{");
+        sb.append("birth=").append(birth);
+        sb.append(", death=").append(death);
+        sb.append(", id='").append(id).append('\'');
+        sb.append(", names=").append(names);
+        sb.append('}');
+        return sb.toString();
     }
 }

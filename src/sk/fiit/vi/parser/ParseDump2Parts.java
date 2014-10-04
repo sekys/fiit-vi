@@ -26,6 +26,12 @@ public class ParseDump2Parts {
     private List<String> m_objects;
     private List<String> m_births;
 
+    public static final File FILE_PEOPLE = new File(Configuration.getInstance().getDataDir(), "people.gz");
+    public static final File FILE_DEATH = new File(Configuration.getInstance().getDataDir(), "deaths.gz");
+    public static final File FILE_OBJECTS = new File(Configuration.getInstance().getDataDir(), "objects.gz");
+    public static final File FILE_BIRTHS = new File(Configuration.getInstance().getDataDir(), "births.gz");
+    public static final File FILE_DUMP = new File(Configuration.getInstance().getDataDir(), "dump.gz");
+
     public ParseDump2Parts() {
         m_deads = new ArrayList<>(FLUSH_LIMIT);
         m_objects = new ArrayList<>(FLUSH_LIMIT);
@@ -38,10 +44,10 @@ public class ParseDump2Parts {
     }
 
     public void parse() throws Exception {
-        BufferedWriter writerForDeaths = GZIP.write(new File(Configuration.getInstance().getDataDir(), "deaths.gz"));
-        BufferedWriter writerForObjects = GZIP.write(new File(Configuration.getInstance().getDataDir(), "objects.gz"));
-        BufferedWriter writerForBirths = GZIP.write(new File(Configuration.getInstance().getDataDir(), "births.gz"));
-        BufferedReader in = GZIP.read(new File(Configuration.getInstance().getDataDir(), "dump.gz"));
+        BufferedWriter writerForDeaths = GZIP.write(FILE_DEATH);
+        BufferedWriter writerForObjects = GZIP.write(FILE_OBJECTS);
+        BufferedWriter writerForBirths = GZIP.write(FILE_BIRTHS);
+        BufferedReader in = GZIP.read(FILE_DUMP);
 
         String line;
         int processed = 0;

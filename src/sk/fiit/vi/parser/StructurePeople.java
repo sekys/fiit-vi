@@ -22,9 +22,11 @@ public class StructurePeople {
     private static final Pattern RDF_NAME_PATTER = Pattern.compile("^<([^>]+)>\\s<([^>]+)>\\s\"([^\"]+)\"@([^\\s]+).*$");
     private static final String SUBJECT_ID_PREFIX = "http://rdf.freebase.com/ns/m.";
     private static final Logger LOGGER = Logger.getLogger(StructurePeople.class.getName());
+    public static final File FILE_STRUCTURED_PEOPLE = new File(Configuration.getInstance().getDataDir(), "outcomePersons.gz");
 
     private final ArrayList<Person> people;
     private final DateFormats dates;
+
 
     public static class PersonFinderComparator implements Comparator {
         @Override
@@ -47,8 +49,7 @@ public class StructurePeople {
         p.parseFiles();
     }
 
-    private void parseFile(String name, Pattern pattern, IParsing parsing) throws Exception {
-        File file = new File(Configuration.getInstance().getDataDir(), name);
+    private void parseFile(File file, Pattern pattern, IParsing parsing) throws Exception {
         LOGGER.info("Starting parse: " + file);
         BufferedReader in = GZIP.read(file);
         String line;
@@ -135,14 +136,14 @@ public class StructurePeople {
     }
 
     private void parseFiles() throws Exception {
-        parseFile("people.gz", RDF_PATTER, parsePersonID());
+        parseFile(ParseDump2Parts.FILE_PEOPLE, RDF_PATTER, parsePersonID());
         LOGGER.info("Sorting");
         Collections.sort(people);
-        parseFile("births.gz", RDF_DATE_PATTER, parseBirths());
-        parseFile("deceased_persons.gz", RDF_DATE_PATTER, parseDeaths());
-        parseFile("names.gz", RDF_NAME_PATTER, parseNames());
+        parseFile(ParseDump2Parts.FILE_BIRTHS, RDF_DATE_PATTER, parseBirths());
+        parseFile(ParseDump2Parts.FILE_DEATH, RDF_DATE_PATTER, parseDeaths());
+        parseFile(ParseDump2Parts.FILE_OBJECTS, RDF_NAME_PATTER, parseNames());
         LOGGER.info("Starting serialize outcomePersons.");
-        GZIP.serialize(people, new File(Configuration.getInstance().getDataDir(), "outcomePersons.gz"));
+        GZIP.serialize(people, FILE_STRUCTURED_PEOPLE);
     }
 
     protected String parseID(String subject) {
