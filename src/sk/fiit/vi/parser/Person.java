@@ -8,18 +8,46 @@ import java.util.List;
 
 /**
  * Created by Seky on 30. 9. 2014.
+ * Datova struktura pre osobu.
+ * Zoskupuje atributy.
  */
 public class Person implements Serializable, Comparable<Person> {
     private static final long serialVersionUID = 5548062182445352621L;
 
-    private String id;
-    private List<String> names;
-    private DateTime birth;
-    private DateTime death;
+    private String id;            // Jednoznacne ID
+    private List<String> names; // osoba moze mat rozne mena v roznych jazykoch
+    private DateTime birth;    // Datum narodenia
+    private DateTime death;    // Datum smrti
 
     public Person(String id) {
         this.id = id;
         names = new ArrayList<>();
+    }
+
+    /**
+     * Overenie prieniku casoveho bodu s prienikom intervalu
+     *
+     * @param point Casovy bod.
+     * @param another Casovy interval.
+     * @return Vysledok prieniku.
+     */
+    private static Boolean pointIntersection(DateTime point, Person another) {
+        if (another.birth == null || another.death == null) {
+            return null;
+        }
+
+        return (another.birth.isBefore(point) && another.death.isAfter(point));
+    }
+
+    /**
+     * Porovnanie casoveho intervalu s intervalom
+     *
+     * @param a Osoba prva
+     * @param b Osoba druha
+     * @return Vysledok prieniku.
+     */
+    private static boolean intervalIntersection(Person a, Person b) {
+        return pointIntersection(a.birth, b) == true || pointIntersection(a.death, b) == true;
     }
 
     public String getId() {
@@ -50,6 +78,12 @@ public class Person implements Serializable, Comparable<Person> {
         this.death = death;
     }
 
+    /**
+     * Porovnanie dvoch osob je len na zaklade ID
+     *
+     * @param o Druha osoba.
+     * @return Su rovnake.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,19 +106,13 @@ public class Person implements Serializable, Comparable<Person> {
         return id.compareTo(o.getId());
     }
 
-
-    private static Boolean pointIntersection(DateTime point, Person another) {
-        if (another.birth == null || another.death == null) {
-            return null;
-        }
-
-        return (another.birth.isBefore(point) && another.death.isAfter(point));
-    }
-
-    private static boolean intervalIntersection(Person a, Person b) {
-        return pointIntersection(a.birth, b) == true || pointIntersection(a.death, b) == true;
-    }
-
+    /**
+     * Kontrola ci osoba sa mohla stretnut s inou osobou.
+     * Kontroluje sa len na zaklade datumu narodenia a smrti osob.
+     *
+     * @param another Druha osoba
+     * @return NULL - Neda sa urcite vysledok. Inak vrati True / False
+     */
     public Boolean checkIntersection(Person another) {
         if (equals(another)) {
             return true;  // sam so sebou
@@ -124,6 +152,11 @@ public class Person implements Serializable, Comparable<Person> {
         return false;
     }
 
+    /**
+     * Pomocna metoda na vypis atributu
+     *
+     * @return Retazec s atributmy personu.
+     */
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Person{");

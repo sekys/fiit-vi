@@ -13,24 +13,28 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Seky on 30. 9. 2014.
+ * Pomocny parser jenotlivych atributov do roznych suborov.
+ * V rieseni sme pouzili rozne metody na parsovanie.
  */
 public class ParseDump2Parts {
-    private final static Pattern REGEX_DEAD_PEOPLE = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/people\\.deceased_person>.*");
-    private final static Pattern REGEX_OBJECTS = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/type\\.object\\.name>.*");
-    private final static Pattern REGEX_DATE_OF_BIRTH = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/people\\.person\\.date_of_birth>.*");
-
-    private final static int FLUSH_LIMIT = 10000;
-    private final static double TOTAL_LINES = 2746142741L;
-
-    private List<String> m_deads;
-    private List<String> m_objects;
-    private List<String> m_births;
-
+    // Files
     public static final File FILE_PEOPLE = new File(Configuration.getInstance().getDataDir(), "people.gz");
     public static final File FILE_DEATH = new File(Configuration.getInstance().getDataDir(), "deaths.gz");
     public static final File FILE_OBJECTS = new File(Configuration.getInstance().getDataDir(), "objects.gz");
     public static final File FILE_BIRTHS = new File(Configuration.getInstance().getDataDir(), "births.gz");
     public static final File FILE_DUMP = new File(Configuration.getInstance().getDataDir(), "dump.gz");
+
+    // Regex for specific file
+    private final static Pattern REGEX_DEAD_PEOPLE = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/people\\.deceased_person>.*");
+    private final static Pattern REGEX_OBJECTS = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/type\\.object\\.name>.*");
+    private final static Pattern REGEX_DATE_OF_BIRTH = Pattern.compile(".*<http://rdf\\.freebase\\.com/ns/people\\.person\\.date_of_birth>.*");
+    private final static int FLUSH_LIMIT = 10000; // po kolkych riadkov, sa zapisuju udaje
+    private final static double TOTAL_LINES = 2746142741L; // pomocny udaj re vyhodnotenie stavu spracovania
+
+    // List of atributes
+    private List<String> m_deads;
+    private List<String> m_objects;
+    private List<String> m_births;
 
     public ParseDump2Parts() {
         m_deads = new ArrayList<>(FLUSH_LIMIT);
@@ -94,6 +98,13 @@ public class ParseDump2Parts {
         in.close();
     }
 
+    /**
+     * Write data to the file
+     *
+     * @param writer
+     * @param data
+     * @throws IOException
+     */
     private void write(BufferedWriter writer, List<String> data) throws IOException {
         for (String record : data) {
             writer.write(record);

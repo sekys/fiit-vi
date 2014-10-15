@@ -1,11 +1,11 @@
 Parsovanie
 ===
 
-Pre parsovanie freebase dumpu, vo formate RDF boli otestovane tieto techniky.
+Pre oparsovanie freebase dumpu, ktory je vo formate RDF boli otestovane tieto techniky.
 
-1. Prve parsovanie prebehlo dekopresiou dumpu. Tato dekopresia trvala 3hod, vysledny subor zaberal 360G. Na tomto subore bol sputeny grep, ktory trval niekolko hodin. Vysledny subor sme este analyzovali 010 Eitorom, ktory je urceny pre takto velke subory. Samotne nacitanie suboru trvalo vyse 2hodin.
+1. Prve oparsovanie prebehlo dekopresiou dumpu. Tato dekopresia trvala 3hod, vysledny subor zaberal 360G. Na tomto subore bol sputeny grep, ktory trval niekolko hodin. Vysledny subor sme este analyzovali 010 Editorom, ktory je urceny pre takto velke subory. Samotne nacitanie suboru do editoru trvalo vyse 2hodin.
 
-2. Druha technika spocivala v pouziti Java programu, kde sa vyuzili regularne vyrazy. Program je v triede Parser.java. Program parsoval povodny GZ subor za pomoci GZIPInputStream a riadky boli parsovane do 3 roznych suborov, podla typu. Parsovanie a dekompresia trvala 3hod.
+2. Druha technika spocivala v pouziti Java programu, kde sa vyuzili regularne vyrazy. Program je v triede ParseDump2Parts.java. Program parsoval povodny komprimovany subor za pomoci GZIPInputStream a riadky boli oparsovane do 4 roznych suborov, podla typu. Parsovanie a dekompresia trvala 3hod.
 
 3. Tretia technika spocivala vo vyuziti "zgrepu", ktory ma podobnu funkcionalitu ako grep s tym,
 ze parsuje povodny zazipovany subor. Na tomto subore boli spustene 4 prikazy naraz:
@@ -19,7 +19,7 @@ zgrep '\s<http://rdf\.freebase.com/ns/type\.object\.type>\s<http://rdf\.freebase
 
 ```
 
-Parsovanie s dekompresiou trvalo 1hod. Pricom riadky boli rozdelene do suborov a boli rovno zakompresovane.
-
+Parsovanie priamo s dekompresiou trvalo 1hod, pre vsetky prikazy spolu. Pricom vystup bol rozdeleny do suborov a boli komprimovane.
 Zda sa, ze najlepsou technikou na parsovanie velkych suborov je teda zgrep.
-Dovodom je, ze IO operacie disku su velmy narocne, preto sa oplati parsovat povodny zazipovany subor. Dalej zgrep bezal rychlejsie ako Java program, pretoze zgrep je na nizsej urovni ako Java, ktora bezi na virtualnom stroji.
+Dovodom je, ze IO operacie disku su velmy narocne, preto sa oplati parsovat povodny komprimovany subor. 
+Dalej zgrep bezal rychlejsie ako Java program, pretoze zgrep je na nizsej urovni ako Java, ktora bezi na virtualnom stroji.

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Seky on 1. 10. 2014.
+ * Trieda sa stara o nacitanie osob a ich presun o lucene.
  */
 public class Persons2Lucene {
     private static final Logger LOGGER = Logger.getLogger(Persons2Lucene.class.getName());

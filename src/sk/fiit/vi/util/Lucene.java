@@ -32,16 +32,21 @@ import java.util.Set;
 
 /**
  * Created by Seky on 2. 10. 2014.
+ * Trieda sa stara o pracu s Apache lucene.
  */
 public class Lucene {
     private static final Logger LOGGER = Logger.getLogger(Lucene.class.getName());
+
+    // Miesto ulozsika indexu
     private static final File DATA_DIR = new File(Configuration.getInstance().getDataDir(), "lucene");
+
+    // Konstatny pre Lucene
     private static final Version VERSION = Version.LUCENE_4_9;
     private static final int HITS = 5;
 
-    private final DateTimeFormatter fmt;
-    private final StandardAnalyzer textAnalyzer;
-    private Directory dir;
+    private final DateTimeFormatter fmt; // formatovac datumov
+    private final StandardAnalyzer textAnalyzer; // analyzer textu
+    private Directory dir; // ulozisko indexu
 
     private Lucene() {
         fmt = ISODateTimeFormat.basicDate();
@@ -57,25 +62,28 @@ public class Lucene {
         return LuceneHolder.INSTANCE;
     }
 
-    private static class LuceneHolder {
-        private static final Lucene INSTANCE = new Lucene();
-    }
-
+    /**
+     * Metoda na pridanie mnoziny ludi do Lucene
+     */
     public void addPeople(List<Person> people) throws IOException {
         IndexWriterConfig config = new IndexWriterConfig(VERSION, textAnalyzer);
         IndexWriter writer = new IndexWriter(dir, config);
         Document doc;
         for (Person p : people) {
             for (String name : p.getNames()) {
+                // Pridanie jednotlivej osoby
                 doc = serializePerson(p.getId(), name, p.getBirth(), p.getDeath());
                 writer.addDocument(doc);
             }
         }
-        LOGGER.info("Commiting");
+        LOGGER.info("Commiting.");
         writer.commit();
         writer.close();
     }
 
+    /**
+     * Metoda na konvertovanie atributov osoby na do dokumentu (lucene format).
+     */
     private Document serializePerson(String id, String name, DateTime birth, DateTime death) throws IOException {
         Document doc = new Document();
         doc.add(new TextField("name", name, Field.Store.YES));
@@ -89,6 +97,9 @@ public class Lucene {
         return doc;
     }
 
+    /**
+     * Metoda na ziskanie osoby v nasom formate zo strktury dokumentu (struktura Lucene)
+     */
     private Person deserializePerson(Document doc) {
         Person p = new Person(doc.get("id"));
         String birth = doc.get("birth");
@@ -103,6 +114,9 @@ public class Lucene {
         return p;
     }
 
+    /**
+     * Ukoncenie prace s lucene.
+     */
     public void close() {
         try {
             textAnalyzer.close();
@@ -116,15 +130,22 @@ public class Lucene {
         return textAnalyzer;
     }
 
+    /**
+     * Metoda na vyhladavanie osoby. Vyhladavanie je na zaklade mena.
+     * VYsledkom hladania je struktura osoby.
+     */
     public Set<Person> find(String name) throws Exception {
+        // Otvorenie indexu
         IndexReader reader = DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
 
+        // Vyhladanie na zaklade mena, definujeme sposob vyhodnotenia
         Query query = new QueryParser(VERSION, "name", textAnalyzer).parse(name);
         TopScoreDocCollector collector = TopScoreDocCollector.create(HITS, true);
         searcher.search(query, collector);
         ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
+        // Presun struktury DOC do Person
         Set<Person> outcome = new HashSet<>();
         for (ScoreDoc doc : hits) {
             int documentID = doc.doc;
@@ -133,5 +154,9 @@ public class Lucene {
             outcome.add(p);
         }
         return Collections.unmodifiableSet(outcome);
+    }
+
+    private static class LuceneHolder {
+        private static final Lucene INSTANCE = new Lucene();
     }
 }

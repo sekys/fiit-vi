@@ -8,6 +8,7 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by Seky on 30. 9. 2014.
+ * Trieda zoskupuje staticke metody pre pracu s GZIP subormy.
  */
 public class GZIP {
 
