@@ -7,7 +7,16 @@ Pre oparsovanie freebase dumpu, ktory je vo formate RDF boli otestovane tieto te
 
 2. Druha technika spocivala v pouziti Java programu, kde sa vyuzili regularne vyrazy. Program je v triede ParseDump2Parts.java. Program parsoval povodny komprimovany subor za pomoci GZIPInputStream a riadky boli oparsovane do 4 roznych suborov, podla typu. Parsovanie a dekompresia trvala 3hod.
 
-3. Tretia technika spocivala vo vyuziti "zgrepu", ktory ma podobnu funkcionalitu ako grep s tym,
+3. Tretia technika vyuziva nastroj grep v systeme Hadoop. Prikaz na parsovanie datumov je uvdeny nizsie. Tento prikaz trval dlhsie
+ako predchadzajuce prikazy. Zgrep prikaz nie je implementovany a tak sa musi parsovat dekomprimovany subor.
+
+```Shell
+
+%HADOOP_HOME%/bin/hadoop org.apache.hadoop.examples.Grep data out ".*<http://rdf\.freebase\.com/ns/people\.person\.date_of_birth>.*"
+
+```
+
+4. Dalsia technika spocivala vo vyuziti "zgrepu", ktory ma podobnu funkcionalitu ako grep s tym,
 ze parsuje povodny zazipovany subor. Na tomto subore boli spustene 4 prikazy naraz:
 
 ```Shell
