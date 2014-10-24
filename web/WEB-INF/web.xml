@@ -4,7 +4,7 @@
 
     <servlet>
         <servlet-name>people service</servlet-name>
-        <servlet-class>sk.fiit.vi.service.Servlet</servlet-class>
+        <servlet-class>peopleCouldMeet.service.Servlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -13,7 +13,7 @@
     </servlet-mapping>
 
     <listener>
-        <listener-class>sk.fiit.vi.service.ServiceInitializer</listener-class>
+        <listener-class>peopleCouldMeet.service.ServiceInitializer</listener-class>
     </listener>
 
 </web-app>
