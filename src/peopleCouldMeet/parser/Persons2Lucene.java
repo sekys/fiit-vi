@@ -17,9 +17,11 @@ public class Persons2Lucene {
         LOGGER.info("Deserializing start");
         ArrayList<Person> people;
         people = (ArrayList<Person>) GZIP.deserialize(StructurePeople.FILE_STRUCTURED_PEOPLE);
+
         LOGGER.info("Deserialized");
         Lucene.getInstance().addPeople(people);
         LOGGER.info("Added people");
         Lucene.getInstance().close();
+        LOGGER.info("done");
     }
 }

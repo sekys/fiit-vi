@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.Set;
 
 /**
@@ -42,9 +43,11 @@ public class Servlet extends HttpServlet {
 
         // Overenie parametrov
         if (nameA == null || nameB == null) {
-            resp.sendError(400, "Parameter nameA / nameB missing.");
+            resp.sendError(500, "Parameter nameA / nameB missing.");
             return;
         }
+        nameA = URLDecoder.decode(nameA, "UTF-8");
+        nameB = URLDecoder.decode(nameB, "UTF-8");
 
         // Nastavenie vystupu
         resp.setHeader("Content-Type", "text/html");

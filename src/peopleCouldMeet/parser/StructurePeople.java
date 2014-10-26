@@ -78,7 +78,7 @@ public class StructurePeople {
                     throw new IllegalArgumentException("Line is bad formatted.");
                 }
             } catch (Exception e) {
-                LOGGER.warn(file + " ignoring " + line);
+                LOGGER.warn("ignoring " + line);
             }
         }
     }
@@ -195,6 +195,7 @@ public class StructurePeople {
         // Uloz vysledok
         LOGGER.info("Starting serialize: " + FILE_STRUCTURED_PEOPLE);
         GZIP.serialize(people, FILE_STRUCTURED_PEOPLE);
+        LOGGER.info("done");
     }
 
     /**

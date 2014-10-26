@@ -21,7 +21,7 @@ public class Person implements Serializable, Comparable<Person> {
 
     public Person(String id) {
         this.id = id;
-        names = new ArrayList<>();
+        names = new ArrayList<>(1);
     }
 
     /**
